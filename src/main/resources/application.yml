@@ -1,0 +1,55 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: nanu-swdg
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/${DB_NAME:mydb}?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${DB_USER:root}
+    password: ${DB_PASS:password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+        show_sql: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          nanu-oauth:
+            client-id: ${OAUTH_CLIENT_ID}
+            client-secret: ${OAUTH_CLIENT_SECRET}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/nanu-oauth"
+            scope:
+              - openid
+              - profile
+
+        provider:
+          nanu-oauth:
+            authorization-uri: https://auth.nanu.cc/oauth/authorize
+            token-uri: https://auth.nanu.cc/oauth/token
+            user-info-uri: https://auth.nanu.cc/user
+            jwk-set-uri: https://auth.nanu.cc/.well-known/jwks.json
+
+logging:
+  level:
+    root: info
+    org.springframework: info
+    org.hibernate.SQL: info
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    org.springframework.security: debug
+    org.springframework.security.oauth2: debug
+
+auth:
+  auth-url: "https://auth.nanu.cc/oauth/code"
+  application-secret: ${APPLICATION_SECRET:unknown}
+  admin:
+    email: admin@donghyun.cc

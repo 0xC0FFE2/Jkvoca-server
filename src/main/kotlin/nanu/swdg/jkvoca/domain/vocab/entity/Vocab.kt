@@ -1,0 +1,31 @@
+package nanu.swdg.jkvoca.domain.vocab.entity
+
+import jakarta.persistence.*
+import java.util.UUID
+
+@Entity
+@Table(name = "tbl_vocab")
+data class Vocab(
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(
+        name = "vocab_id",
+        columnDefinition = "BINARY(16)"
+    )
+    val id: UUID? = null,
+
+    @Column(name = "vocab_name")
+    val name: String,
+
+    @Column(name = "voca_count")
+    val count: Int? = null,
+
+    @Column(name = "vocab_description")
+    val description: String? = null,
+
+    @Column(name = "vocab_category")
+    val category: String? = null,
+
+    @Column(name = "vocab_level")
+    val level: String? = null
+)
