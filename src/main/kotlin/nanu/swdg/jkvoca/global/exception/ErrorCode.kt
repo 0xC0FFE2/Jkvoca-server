@@ -10,6 +10,7 @@ enum class ErrorCode(
 
     INVALID_ACCESS_TOKEN(400, "액세스 토큰이 만료되었거나 유효하지 않습니다."),
     EMPTY_ACCESS_TOKEN(400, "액세스 토큰이 비어 있습니다."),
+    OAUTH_AUTH_FAIL(401,"OAuth 서비스 인증에 실패했습니다."),
 
     JWT_TOKEN_EXPIRED(401, "JWT 토큰이 만료되었습니다."),
     JWT_TOKEN_INVALID(401, "JWT 토큰이 유효하지 않습니다."),

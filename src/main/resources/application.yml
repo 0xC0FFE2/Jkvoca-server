@@ -52,4 +52,4 @@ auth:
   auth-url: "https://auth.nanu.cc/oauth/code"
   application-secret: ${APPLICATION_SECRET:unknown}
   admin:
-    email: admin@donghyun.cc
+    email: ${ADMIN_EMAIL}
