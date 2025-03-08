@@ -2,7 +2,6 @@ package nanu.swdg.jkvoca.global.config
 
 import jakarta.servlet.http.HttpServletResponse
 import nanu.swdg.jkvoca.global.security.auth.AuthProvider
-import nanu.swdg.jkvoca.global.security.auth.TokenAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -12,22 +11,19 @@ import org.springframework.security.web.SecurityFilterChain
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(
+    private val authProvider: AuthProvider
+) {
     @Bean
-    fun filterChain(
-        http: HttpSecurity,
-        authProvider: AuthProvider,
-        tokenAuthenticationFilter: TokenAuthenticationFilter
-    ): SecurityFilterChain {
+    fun filterChain(http: HttpSecurity): SecurityFilterChain {
         return http
             .csrf { it.disable() }
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
-            .addFilterBefore(tokenAuthenticationFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter::class.java)
             .authorizeHttpRequests { authorize ->
                 authorize
-                    .requestMatchers("/v1/auth/token", "/v1/vocab/read")
+                    .requestMatchers("/v1/auth/token", "/v1/vocab/read", "/v1/vocab/read/**", "/v1/vocab/info/**")
                     .permitAll()
                     .anyRequest().authenticated()
             }
@@ -40,6 +36,8 @@ class SecurityConfig {
                 }
             }
             .authenticationProvider(authProvider)
+            .httpBasic { it.disable() }
+            .formLogin { it.disable() }
             .build()
     }
 }
