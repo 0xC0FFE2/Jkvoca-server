@@ -9,8 +9,7 @@ import java.util.UUID
 
 interface WordRepository : JpaRepository<Word, UUID> {
 
-    @Query("SELECT MAX(w.wordIndex) FROM Word w WHERE w.vocabId = :vocabId")
-    fun findMaxWordIndexByVocabId(@Param("vocabId") vocabId: UUID): Int?
+    fun countByVocabId(vocabId: UUID): Int
 
     @Modifying
     @Query("UPDATE Word w SET w.wordIndex = w.wordIndex - 1 WHERE w.vocabId = :vocabId AND w.wordIndex > :deletedIndex")

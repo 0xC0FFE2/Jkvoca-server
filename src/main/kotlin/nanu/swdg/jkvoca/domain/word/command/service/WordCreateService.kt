@@ -1,6 +1,7 @@
 package nanu.swdg.jkvoca.domain.word.command.service
 
 import nanu.swdg.jkvoca.domain.vocab.command.repository.VocabRepository
+import nanu.swdg.jkvoca.domain.vocab.entity.Vocab
 import nanu.swdg.jkvoca.domain.word.command.dto.request.WordCreateRequest
 import nanu.swdg.jkvoca.domain.word.command.repository.WordRepository
 import nanu.swdg.jkvoca.domain.word.entity.Word
@@ -22,9 +23,7 @@ class WordCreateService(
         val vocab = vocabRepository.findById(vocabIdUUID)
             .orElseThrow { IllegalArgumentException("해당 ID의 단어장이 존재하지 않습니다: $vocabId") }
 
-        vocabRepository.save(vocab.copy(count = vocab.count + 1))
-
-        val wordIndex = wordRepository.findMaxWordIndexByVocabId(vocabIdUUID)?.plus(1) ?: 0
+        val wordCount = wordRepository.countByVocabId(vocabIdUUID)
 
         val word = Word(
             vocabId = vocabIdUUID,
@@ -33,10 +32,14 @@ class WordCreateService(
             example = request.example,
             pronunciation = request.pronunciation,
             difficulty = request.difficulty,
-            wordIndex = wordIndex
+            wordIndex = wordCount
         )
 
         val savedWord = wordRepository.save(word)
+
+        val updatedVocab = vocab.copy(count = wordCount + 1)
+        vocabRepository.save(updatedVocab)
+
         return savedWord.id ?: throw IllegalStateException("저장된 단어의 ID가 없습니다.")
     }
 }
