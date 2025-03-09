@@ -10,6 +10,7 @@ import nanu.swdg.jkvoca.domain.word.query.dto.response.WordPageResponse
 import nanu.swdg.jkvoca.domain.word.query.dto.response.WordResponse
 import nanu.swdg.jkvoca.domain.word.query.service.GetAllWordsByVocabIdService
 import nanu.swdg.jkvoca.domain.word.query.service.GetPagedWordsService
+import nanu.swdg.jkvoca.domain.word.query.service.GetWordsForClassroomService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -22,7 +23,8 @@ class WordController(
     private val wordUpdateService: WordUpdateService,
     private val wordDeleteService: WordDeleteService,
     private val getAllWordsByVocabIdService: GetAllWordsByVocabIdService,
-    private val getPagedWordsService: GetPagedWordsService
+    private val getPagedWordsService: GetPagedWordsService,
+    private val getWordsForClassroomService: GetWordsForClassroomService
 ) {
 
     @PostMapping()
@@ -57,5 +59,11 @@ class WordController(
     ): ResponseEntity<WordPageResponse> {
         val pagedWords = getPagedWordsService.execute(vocabId, page, size)
         return ResponseEntity.ok(pagedWords)
+    }
+
+    @GetMapping("/vocab/list/{classroomId}/words")
+    @ResponseStatus(HttpStatus.OK)
+    fun getClassroomWords(@PathVariable classroomId: String): List<WordResponse> {
+        return getWordsForClassroomService.execute(UUID.fromString(classroomId))
     }
 }
