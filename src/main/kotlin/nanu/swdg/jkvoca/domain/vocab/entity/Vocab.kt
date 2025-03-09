@@ -1,6 +1,7 @@
 package nanu.swdg.jkvoca.domain.vocab.entity
 
 import jakarta.persistence.*
+import nanu.swdg.jkvoca.domain.word.entity.Word
 import java.util.UUID
 
 @Entity
@@ -27,5 +28,5 @@ data class Vocab(
     val category: String,
 
     @Column(name = "vocab_level")
-    val level: String
+    val level: String,
 )

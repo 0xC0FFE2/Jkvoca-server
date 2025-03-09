@@ -3,6 +3,7 @@ package nanu.swdg.jkvoca.domain.vocab.presentation
 import jakarta.validation.Valid
 import nanu.swdg.jkvoca.domain.vocab.command.dto.request.VocabCreateRequest
 import nanu.swdg.jkvoca.domain.vocab.command.service.VocabCreateService
+import nanu.swdg.jkvoca.domain.vocab.command.service.VocabDeleteService
 import nanu.swdg.jkvoca.domain.vocab.entity.Vocab
 import nanu.swdg.jkvoca.domain.vocab.query.dto.response.VocabInfoResponse
 import nanu.swdg.jkvoca.domain.vocab.query.service.GetAllVocabsService
@@ -15,13 +16,20 @@ import org.springframework.web.bind.annotation.*
 class VocabController(
     private val vocabCreateService: VocabCreateService,
     private val getVocabInfoService: GetVocabInfoService,
-    private val getAllVocabsService: GetAllVocabsService
+    private val getAllVocabsService: GetAllVocabsService,
+    private val vocabDeleteService: VocabDeleteService
 
 ) {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     fun createVocab(@Valid @RequestBody request: VocabCreateRequest) {
         vocabCreateService.createVocab(request)
+    }
+
+    @DeleteMapping("/delete/{vocabId}")
+    @ResponseStatus(HttpStatus.OK)
+    fun deleteVocab(@Valid @PathVariable vocabId : String) {
+        vocabDeleteService.deleteVocab(vocabId)
     }
 
     @GetMapping("/read")

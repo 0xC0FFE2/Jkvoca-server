@@ -1,6 +1,7 @@
 package nanu.swdg.jkvoca.domain.word.entity
 
 import jakarta.persistence.*
+import nanu.swdg.jkvoca.domain.vocab.entity.Vocab
 import nanu.swdg.jkvoca.domain.word.entity.enums.Difficulty
 import java.util.*
 
@@ -15,10 +16,7 @@ data class Word(
     )
     val id: UUID? = null,
 
-    @Column(
-        name = "vocab_id",
-        columnDefinition = "BINARY(16)"
-    )
+    @Column(name = "vocab_id", columnDefinition = "BINARY(16)")
     val vocabId: UUID,
 
     @Column(name = "english")
