@@ -8,6 +8,7 @@ import nanu.swdg.jkvoca.domain.vocab.entity.Vocab
 import nanu.swdg.jkvoca.domain.vocab.query.dto.response.VocabInfoResponse
 import nanu.swdg.jkvoca.domain.vocab.query.service.GetAllVocabsService
 import nanu.swdg.jkvoca.domain.vocab.query.service.GetVocabInfoService
+import nanu.swdg.jkvoca.domain.vocab.query.service.SearchVocabByVocabNameService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -17,7 +18,8 @@ class VocabController(
     private val vocabCreateService: VocabCreateService,
     private val getVocabInfoService: GetVocabInfoService,
     private val getAllVocabsService: GetAllVocabsService,
-    private val vocabDeleteService: VocabDeleteService
+    private val vocabDeleteService: VocabDeleteService,
+    private val searchVocabByVocabNameService: SearchVocabByVocabNameService
 
 ) {
     @PostMapping("/create")
@@ -48,5 +50,11 @@ class VocabController(
     @ResponseStatus(HttpStatus.OK)
     fun readAllVocabs(): List<VocabInfoResponse> {
         return getAllVocabsService.execute()
+    }
+
+    @GetMapping("/search/{searchKey}")
+    @ResponseStatus(HttpStatus.OK)
+    fun searchVocabsByVocabName(@PathVariable searchKey : String):List<VocabInfoResponse> {
+        return searchVocabByVocabNameService.execute(searchKey)
     }
 }

@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository
 import java.util.UUID
 
 @Repository
-interface VocabQueryRepository : JpaRepository<Vocab, UUID>
+interface VocabQueryRepository : JpaRepository<Vocab, UUID> {
+    fun findByNameContainingIgnoreCase(name: String): List<Vocab>
+}

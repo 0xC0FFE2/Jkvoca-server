@@ -8,6 +8,7 @@ data class VocabInfoResponse(
     val vocabCategory: String,
     val vocabDescription: String,
     val vocabLevel: String,
+    val wordCount: Int,
 ) {
     companion object {
         fun from(vocab: Vocab): VocabInfoResponse {
@@ -16,7 +17,8 @@ data class VocabInfoResponse(
                 vocabName = vocab.name,
                 vocabCategory = vocab.category,
                 vocabDescription = vocab.description,
-                vocabLevel = vocab.level
+                vocabLevel = vocab.level,
+                wordCount = vocab.count,
             )
         }
     }

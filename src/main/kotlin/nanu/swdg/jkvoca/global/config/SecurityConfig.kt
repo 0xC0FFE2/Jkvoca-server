@@ -27,16 +27,13 @@ class SecurityConfig(
             .securityMatcher("/**")
             .authorizeHttpRequests { authorize ->
                 authorize
-                    .requestMatchers("/v1/auth/token", "/v1/vocab/read", "/v1/vocab/read/**", "/v1/vocab/info/**" , "/v1/words/vocab/list/**")
+                    .requestMatchers("/v1/auth/token", "/v1/vocab/read", "/v1/vocab/read/**", "/v1/vocab/info/**" , "/v1/words/vocab/list/**", "/v1/vocab/search/**")
                     .permitAll()
                     .anyRequest().authenticated()
             }
             .exceptionHandling { exception ->
                 exception.authenticationEntryPoint { request, response, authException ->
                     response.status = HttpServletResponse.SC_UNAUTHORIZED
-                    response.contentType = "application/json"
-                    response.characterEncoding = "UTF-8"
-                    response.writer.write("{\"message\":\"Unauthorized\"}")
                 }
             }
             .authenticationProvider(authProvider)
