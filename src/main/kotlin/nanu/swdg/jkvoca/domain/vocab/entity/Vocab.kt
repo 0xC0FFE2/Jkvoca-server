@@ -17,15 +17,15 @@ data class Vocab(
     @Column(name = "vocab_name")
     val name: String,
 
-    @Column(name = "voca_count")
-    val count: Int? = null,
+    @Column(name = "word_count")
+    val count: Int,
 
     @Column(name = "vocab_description")
-    val description: String? = null,
+    val description: String,
 
     @Column(name = "vocab_category")
-    val category: String? = null,
+    val category: String,
 
     @Column(name = "vocab_level")
-    val level: String? = null
+    val level: String
 )
