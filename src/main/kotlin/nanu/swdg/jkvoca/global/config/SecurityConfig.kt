@@ -27,7 +27,7 @@ class SecurityConfig(
             .securityMatcher("/**")
             .authorizeHttpRequests { authorize ->
                 authorize
-                    .requestMatchers("/v1/auth/token", "/v1/vocab/read", "/v1/vocab/read/**", "/v1/vocab/info/**" , "/v1/words/vocab/list/**", "/v1/vocab/search/**")
+                    .requestMatchers("/v1/auth/token", "/v1/vocab/read", "/v1/vocab/read/**", "/v1/vocab/info/**" , "/v1/words/vocab/list/**", "/v1/vocab/search/**", "/v2/classroom/info/**")
                     .permitAll()
                     .anyRequest().authenticated()
             }

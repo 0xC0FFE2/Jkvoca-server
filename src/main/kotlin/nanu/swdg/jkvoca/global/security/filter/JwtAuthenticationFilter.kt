@@ -20,7 +20,8 @@ class JwtAuthenticationFilter(
             "/v1/vocab/read",
             "/v1/vocab/info",
             "/v1/vocab/search/",
-            "/v1/words/vocab/list"
+            "/v1/words/vocab/list",
+            "/v2/classroom/info/"
         )
         private const val BEARER_PREFIX = "Bearer "
     }
