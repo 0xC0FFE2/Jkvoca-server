@@ -2,9 +2,7 @@ package nanu.swdg.jkvoca.domain.classroom.presentation
 
 import nanu.swdg.jkvoca.domain.classroom.command.dto.request.ClassroomCreateRequest
 import nanu.swdg.jkvoca.domain.classroom.command.dto.request.ClassroomUpdateRequest
-import nanu.swdg.jkvoca.domain.classroom.command.service.ClassroomCreateService
-import nanu.swdg.jkvoca.domain.classroom.command.service.ClassroomDeleteService
-import nanu.swdg.jkvoca.domain.classroom.command.service.ClassroomUpdateService
+import nanu.swdg.jkvoca.domain.classroom.command.service.*
 import nanu.swdg.jkvoca.domain.classroom.query.dto.response.ClassroomResponse
 import nanu.swdg.jkvoca.domain.classroom.query.service.GetAllClassroomService
 import nanu.swdg.jkvoca.domain.classroom.query.service.GetClassroomInfoService
@@ -19,7 +17,9 @@ class ClassroomController(
     private val classroomUpdateService: ClassroomUpdateService,
     private val getAllClassroomService: GetAllClassroomService,
     private val getClassroomInfoService: GetClassroomInfoService,
-    private val classroomDeleteService: ClassroomDeleteService
+    private val classroomDeleteService: ClassroomDeleteService,
+    private val classroomNextWordsService: ClassroomNextWordsService,
+    private val classroomPreviousWordsService: ClassroomPreviousWordsService
 ) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,5 +53,17 @@ class ClassroomController(
     @ResponseStatus(HttpStatus.OK)
     fun getClassroomInfo(@PathVariable classroomId: String): ClassroomResponse {
         return getClassroomInfoService.execute(UUID.fromString(classroomId))
+    }
+
+    @PutMapping("/{classroomId}/next")
+    @ResponseStatus(HttpStatus.OK)
+    fun moveToNextWords(@PathVariable classroomId: String) {
+        classroomNextWordsService.moveToNextWords(classroomId)
+    }
+
+    @PutMapping("/{classroomId}/prev")
+    @ResponseStatus(HttpStatus.OK)
+    fun moveToPreviousWords(@PathVariable classroomId: String) {
+        classroomPreviousWordsService.moveToPreviousWords(classroomId)
     }
 }
